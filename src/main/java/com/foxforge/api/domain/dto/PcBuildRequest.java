@@ -8,5 +8,6 @@ public record PcBuildRequest(
         Long gpuId,
         Long psuId,
         Long storageId,
-        Long caseId
+        Long caseId,
+        Long coolerId
 ) {}

@@ -1,27 +1,48 @@
 package com.foxforge.api.service.rule;
 
 import com.foxforge.api.domain.dto.PcBuildRequest;
+import com.foxforge.api.domain.entity.CpuEntity;
+import com.foxforge.api.domain.entity.MotherboardEntity;
+import com.foxforge.api.repository.CpuRepository;
+import com.foxforge.api.repository.MotherboardRepository;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 // Rule to validate if the CPU socket matches the Motherboard socket
 @Component
 public class CpuMotherboardSocketRule implements CompatibilityRule {
 
-    // TODO: Inject CPU and Motherboard repositories via constructor (e.g., CpuRepository and MotherboardRepository)
+    private final CpuRepository cpuRepository;
+    private final MotherboardRepository motherboardRepository;
+
+    // Injects repositories through constructor for Spring IoC
+    public CpuMotherboardSocketRule(CpuRepository cpuRepository, MotherboardRepository motherboardRepository) {
+        this.cpuRepository = cpuRepository;
+        this.motherboardRepository = motherboardRepository;
+    }
 
     @Override
     public boolean isSatisfiedBy(PcBuildRequest request) {
-        // TODO: Validate if the IDs are null
+        // Skip validation if any component ID is missing
         if (request.cpuId() == null || request.motherboardId() == null) {
-            return true; // Or false depending on your business rules for incomplete builds
+            return true;
         }
 
-        // TODO: 1. Fetch the CPU from the database using request.cpuId()
-        // TODO: 2. Fetch the Motherboard from the database using request.motherboardId()
-        // TODO: 3. Compare their sockets, for example:
-        // return cpu.getSocket().equalsIgnoreCase(motherboard.getSocket());
+        // Fetch CPU and Motherboard from database
+        Optional<CpuEntity> cpuOptional = cpuRepository.findById(request.cpuId());
+        Optional<MotherboardEntity> motherboardOptional = motherboardRepository.findById(request.motherboardId());
 
-        return true; 
+        // Incompatible if either component is not found in database
+        if (cpuOptional.isEmpty() || motherboardOptional.isEmpty()) {
+            return false;
+        }
+
+        CpuEntity cpu = cpuOptional.get();
+        MotherboardEntity motherboard = motherboardOptional.get();
+
+        // Check whether both sockets match, ignoring case sensitivity
+        return cpu.getSocket().equalsIgnoreCase(motherboard.getSocket());
     }
 
     @Override

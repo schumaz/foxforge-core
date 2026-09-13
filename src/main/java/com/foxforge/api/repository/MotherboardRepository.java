@@ -5,12 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface MotherboardRepository extends JpaRepository<MotherboardEntity, Long> {
-    
+
     /**
-     * Busca placas-mãe compatíveis com o soquete do processador.
+     * Finds motherboards matching the specified processor socket.
      *
-     * @param socket O soquete (ex: "AM4", "LGA1700")
-     * @return Lista de placas-mãe.
+     * @param socket The CPU socket (e.g., "AM4", "LGA1700")
+     * @return List of matching motherboards.
      */
     List<MotherboardEntity> findBySocket(String socket);
 }

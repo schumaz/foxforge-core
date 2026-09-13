@@ -7,11 +7,11 @@ import java.util.List;
 public interface CpuRepository extends JpaRepository<CpuEntity, Long> {
 
     /**
-     * Busca os processadores filtrando pelo tipo de soquete.
-     * Crucial para a Especificação de Compatibilidade entre CPU e Placa-mãe.
+     * Finds CPUs filtered by socket type.
+     * Crucial for CPU and Motherboard compatibility specification.
      *
-     * @param socket O soquete da CPU (ex: "AM4", "LGA1700")
-     * @return Lista de processadores compatíveis com o soquete informado.
+     * @param socket The CPU socket (e.g., "AM4", "LGA1700")
+     * @return List of CPUs matching the specified socket.
      */
     List<CpuEntity> findBySocket(String socket);
 }

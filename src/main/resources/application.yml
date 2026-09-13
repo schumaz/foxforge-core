@@ -1,1 +1,21 @@
-spring.application.name=foxforge-core
+spring:
+  application:
+    name: foxforge-core
+
+  threads:
+    virtual:
+      enabled: true
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/foxforge_db
+    username: foxforge_user
+    password: "FoxForge#SecurePass2026!"
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true

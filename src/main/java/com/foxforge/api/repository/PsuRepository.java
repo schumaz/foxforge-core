@@ -7,10 +7,10 @@ import java.util.List;
 public interface PsuRepository extends JpaRepository<PsuEntity, Long> {
 
     /**
-     * Busca fontes com potência maior ou igual à potência mínima requerida.
+     * Finds power supplies with wattage greater than or equal to the required minimum.
      *
-     * @param minWattage Potência mínima em Watts
-     * @return Lista de fontes com capacidade suficiente.
+     * @param minWattage Minimum wattage in Watts
+     * @return List of power supplies with sufficient capacity.
      */
     List<PsuEntity> findByWattageGreaterThanEqual(Integer minWattage);
 }

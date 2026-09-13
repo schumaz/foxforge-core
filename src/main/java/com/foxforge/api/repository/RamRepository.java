@@ -7,10 +7,10 @@ import java.util.List;
 public interface RamRepository extends JpaRepository<RamEntity, Long> {
 
     /**
-     * Busca módulos de RAM pelo tipo de memória (ex: "DDR4", "DDR5").
+     * Finds RAM modules by memory type (e.g., "DDR4", "DDR5").
      *
-     * @param memoryType Tipo de memória
-     * @return Lista de módulos de RAM correspondentes.
+     * @param memoryType Memory generation type
+     * @return List of matching RAM modules.
      */
     List<RamEntity> findByMemoryType(String memoryType);
 }

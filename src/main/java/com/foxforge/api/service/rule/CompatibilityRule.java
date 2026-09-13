@@ -2,23 +2,12 @@ package com.foxforge.api.service.rule;
 
 import com.foxforge.api.domain.dto.PcBuildRequest;
 
-/**
- * Contract for atomic hardware compatibility rules implementing the Specification Pattern.
- */
+// Interface defining the contract for compatibility rules
 public interface CompatibilityRule {
-
-    /**
-     * Evaluates whether the given PC build request satisfies the specific compatibility rule.
-     *
-     * @param request the PC build request containing component identifiers
-     * @return true if compatible according to this rule, false otherwise
-     */
+    
+    // Checks if the rule condition is satisfied based on the request IDs
     boolean isSatisfiedBy(PcBuildRequest request);
-
-    /**
-     * Returns a human-readable semantic error message explaining why the compatibility check failed.
-     *
-     * @return semantic error message for failure diagnostics
-     */
+    
+    // Returns the error message if the compatibility rule is violated
     String getErrorMessage();
 }

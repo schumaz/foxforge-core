@@ -7,31 +7,18 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * Service orchestrator running the chain of hardware compatibility specifications.
- * Leverages Spring's Dependency Injection container to discover and inject all implementations
- * of CompatibilityRule following the Chain of Responsibility pattern.
- */
+// Service responsible for running all compatibility validations
 @Service
 public class CompatibilityValidatorService {
 
     private final List<CompatibilityRule> rules;
 
-    /**
-     * Spring IoC scans and injects all components implementing CompatibilityRule into this list.
-     *
-     * @param rules the full collection of discovered compatibility rules
-     */
+    // Spring IoC container automatically injects all beans implementing CompatibilityRule here
     public CompatibilityValidatorService(List<CompatibilityRule> rules) {
         this.rules = rules;
     }
 
-    /**
-     * Executes the validation chain using a fail-fast strategy.
-     *
-     * @param request the PC build request containing component identifiers
-     * @throws IncompatibleHardwareException if any compatibility specification fails
-     */
+    // Iterates through every configured rule and interrupts the flow if any returns false
     public void validateBuild(PcBuildRequest request) {
         for (CompatibilityRule rule : rules) {
             if (!rule.isSatisfiedBy(request)) {

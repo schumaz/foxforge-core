@@ -1,17 +1,21 @@
 package com.foxforge.api.config;
 
 import com.foxforge.api.domain.entity.CaseEntity;
+import com.foxforge.api.domain.entity.CoolerEntity;
 import com.foxforge.api.domain.entity.CpuEntity;
 import com.foxforge.api.domain.entity.GpuEntity;
 import com.foxforge.api.domain.entity.MotherboardEntity;
 import com.foxforge.api.domain.entity.PsuEntity;
 import com.foxforge.api.domain.entity.RamEntity;
+import com.foxforge.api.domain.entity.StorageEntity;
 import com.foxforge.api.repository.CaseRepository;
+import com.foxforge.api.repository.CoolerRepository;
 import com.foxforge.api.repository.CpuRepository;
 import com.foxforge.api.repository.GpuRepository;
 import com.foxforge.api.repository.MotherboardRepository;
 import com.foxforge.api.repository.PsuRepository;
 import com.foxforge.api.repository.RamRepository;
+import com.foxforge.api.repository.StorageRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -28,19 +32,25 @@ public class DatabaseSeeder implements CommandLineRunner {
     private final RamRepository ramRepository;
     private final PsuRepository psuRepository;
     private final CaseRepository caseRepository;
+    private final CoolerRepository coolerRepository;
+    private final StorageRepository storageRepository;
 
     public DatabaseSeeder(CpuRepository cpuRepository,
                           MotherboardRepository motherboardRepository,
                           GpuRepository gpuRepository,
                           RamRepository ramRepository,
                           PsuRepository psuRepository,
-                          CaseRepository caseRepository) {
+                          CaseRepository caseRepository,
+                          CoolerRepository coolerRepository,
+                          StorageRepository storageRepository) {
         this.cpuRepository = cpuRepository;
         this.motherboardRepository = motherboardRepository;
         this.gpuRepository = gpuRepository;
         this.ramRepository = ramRepository;
         this.psuRepository = psuRepository;
         this.caseRepository = caseRepository;
+        this.coolerRepository = coolerRepository;
+        this.storageRepository = storageRepository;
     }
 
     @Override
@@ -56,7 +66,7 @@ public class DatabaseSeeder implements CommandLineRunner {
                 3.7, 4.6, "DDR4",
                 7500, 6800
         );
-        
+
         CpuEntity corei5_13400f = new CpuEntity(
                 "Intel", "Core i5-13400F", 209.99, 65,
                 "LGA1700", 10, 16,
@@ -72,7 +82,7 @@ public class DatabaseSeeder implements CommandLineRunner {
                 "DDR4", 4, 128,
                 2, 2
         );
-        
+
         MotherboardEntity msiB760m = new MotherboardEntity(
                 "MSI", "PRO B760M-P", 99.99, 15,
                 "LGA1700", "B760", "Micro-ATX",
@@ -88,7 +98,7 @@ public class DatabaseSeeder implements CommandLineRunner {
                 "1x 8-pin", 550,
                 12000, 9500
         );
-        
+
         GpuEntity rx7600 = new GpuEntity(
                 "XFX", "Speedster SWFT 210 Radeon RX 7600", 259.99, 165,
                 8, "GDDR6", 241,
@@ -103,13 +113,13 @@ public class DatabaseSeeder implements CommandLineRunner {
                 "DDR4", 16, 2,
                 3200, 16
         );
-        
+
         RamEntity kingstonFuryDdr5 = new RamEntity(
                 "Kingston", "FURY Beast 32GB (2x16GB) DDR5", 109.99, 8,
                 "DDR5", 32, 2,
                 6000, 36
         );
-        ramRepository.saveAll(List.of(corsairVengeanceDdr4,kingstonFuryDdr5));
+        ramRepository.saveAll(List.of(corsairVengeanceDdr4, kingstonFuryDdr5));
 
         // 5. Power Supplies (PSU)
         PsuEntity corsairRm650x = new PsuEntity(
@@ -126,5 +136,21 @@ public class DatabaseSeeder implements CommandLineRunner {
                 365, 165, 200
         );
         caseRepository.save(nzxtH5Flow);
+
+        // 7. CPU Coolers
+        CoolerEntity deepcoolAk400 = new CoolerEntity(
+                "DeepCool", "AK400", 34.99, 5,
+                "Air Cooler", 220, 155,
+                "AM4, AM5, LGA1700, LGA1200"
+        );
+        coolerRepository.save(deepcoolAk400);
+
+        // 8. Storage Drives
+        StorageEntity kingstonNv2 = new StorageEntity(
+                "Kingston", "NV2 1TB M.2 NVMe", 59.99, 4,
+                "NVMe SSD", 1000, 3500,
+                2100
+        );
+        storageRepository.save(kingstonNv2);
     }
 }

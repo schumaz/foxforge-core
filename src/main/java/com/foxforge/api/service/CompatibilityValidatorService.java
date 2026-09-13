@@ -19,7 +19,7 @@ public class CompatibilityValidatorService {
     }
 
     // Iterates through every configured rule and interrupts the flow if any returns false
-    public void validateBuild(PcBuildRequest request) {
+    public void validate(PcBuildRequest request) {
         for (CompatibilityRule rule : rules) {
             if (!rule.isSatisfiedBy(request)) {
                 throw new IncompatibleHardwareException(rule.getErrorMessage());
